@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"database/sql"
-	//"encoding/json"
+	"encoding/json"
 	"fmt"
 	"github.com/dgoodwin/syncsets/api"
 	log "github.com/sirupsen/logrus"
@@ -24,7 +24,16 @@ func NewClusterHandler(db *sql.DB) *ClusterHandler {
 
 func (h *ClusterHandler) Get(resp http.ResponseWriter, req *http.Request) {
 	h.logger.Info("called Get")
-	fmt.Fprintf(resp, "called get cluster handler")
+	item := new(api.ClusterItem)
+	err := h.db.QueryRow("SELECT id, data FROM clusters ORDER BY id DESC LIMIT 1").Scan(&item.ID, &item.Cluster)
+	if err != nil {
+		log.WithError(err).Error("error querying db")
+	}
+	jsonBytes, err := json.Marshal(item.Cluster)
+	if err != nil {
+		log.WithError(err).Error("error marshalling json")
+	}
+	fmt.Fprintf(resp, string(jsonBytes))
 }
 
 func (h *ClusterHandler) Post(resp http.ResponseWriter, req *http.Request) {
