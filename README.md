@@ -48,3 +48,10 @@ $ goose postgres $GOOSE_PARAMS up
 ```bash
 $ make build
 ```
+
+
+### Post Cluster JSON
+
+```bash
+$ curl --header "Content-Type: application/json" --request POST -d @cluster.json http://localhost:8080/clusters
+```

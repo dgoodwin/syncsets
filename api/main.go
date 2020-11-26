@@ -11,6 +11,9 @@ func main() {
 	log.SetLevel(log.InfoLevel)
 	log.Info("running syncsets-api")
 	r := mux.NewRouter().StrictSlash(true)
-	r.Handle("/clusters", handlers.NewClusterHandler())
+
+	clusterHandler := handlers.NewClusterHandler()
+	r.HandleFunc("/clusters", clusterHandler.Get).Methods("GET")
+	r.HandleFunc("/clusters", clusterHandler.Post).Methods("POST")
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
