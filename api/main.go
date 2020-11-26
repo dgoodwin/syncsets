@@ -1,19 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"github.com/dgoodwin/syncsets/api/handlers"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 )
 
-func homeLink(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome home!")
-}
-
 func main() {
-	fmt.Println("hello world")
-	router := mux.NewRouter().StrictSlash(true)
-	router.HandleFunc("/", homeLink)
-	log.Fatal(http.ListenAndServe(":8080", router))
+	log.SetLevel(log.InfoLevel)
+	log.Info("running syncsets-api")
+	r := mux.NewRouter().StrictSlash(true)
+	r.Handle("/clusters", handlers.NewClusterHandler())
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
