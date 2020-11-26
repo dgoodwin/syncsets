@@ -1,7 +1,6 @@
 package api
 
 import (
-	//"database/sql"
 	"database/sql/driver"
 	"encoding/json"
 	"errors"

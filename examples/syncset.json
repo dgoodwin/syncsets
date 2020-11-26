@@ -1,0 +1,50 @@
+{
+    "apiVersion": "hive.openshift.io/v1",
+    "kind": "SelectorSyncSet",
+    "metadata": {
+        "name": "example"
+    },
+    "spec": {
+        "clusterDeploymentSelector": {
+            "matchLabels": {
+                "foo": "bar"
+            }
+        },
+        "resourceApplyMode": "Sync",
+        "resources": [
+            {
+                "apiVersion": "v1",
+                "data": {
+                    "foo": "bar"
+                },
+                "kind": "ConfigMap",
+                "metadata": {
+                    "name": "foobar",
+                    "namespace": "default"
+                }
+            },
+            {
+                "apiVersion": "v1",
+                "data": {
+                    "foo": "bar"
+                },
+                "kind": "ConfigMap",
+                "metadata": {
+                    "name": "foobar2",
+                    "namespace": "default"
+                }
+            },
+            {
+                "apiVersion": "v1",
+                "data": {
+                    "foo": "bar"
+                },
+                "kind": "ConfigMap",
+                "metadata": {
+                    "name": "foobar3",
+                    "namespace": "default"
+                }
+            }
+        ]
+    }
+}

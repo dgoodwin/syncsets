@@ -22,5 +22,10 @@ func main() {
 	clusterHandler := handlers.NewClusterHandler(db)
 	r.HandleFunc("/clusters", clusterHandler.Get).Methods("GET")
 	r.HandleFunc("/clusters", clusterHandler.Post).Methods("POST")
+
+	syncsetHandler := handlers.NewSyncSetHandler(db)
+	r.HandleFunc("/syncsets", syncsetHandler.Get).Methods("GET")
+	r.HandleFunc("/syncsets", syncsetHandler.Post).Methods("POST")
+
 	log.Fatal(http.ListenAndServe(":8080", r))
 }

@@ -50,8 +50,9 @@ $ make build
 ```
 
 
-### Post Cluster JSON
+### Load Some Data
 
 ```bash
-$ curl --header "Content-Type: application/json" --request POST -d @cluster.json http://localhost:8080/clusters
+$ curl --header "Content-Type: application/json" --request POST -d @examples/cluster.json http://localhost:8080/clusters
+$ curl --header "Content-Type: application/json" --request POST -d @examples/syncset.json http://localhost:8080/syncsets
 ```
