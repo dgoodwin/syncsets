@@ -43,3 +43,8 @@ $ goose postgres $GOOSE_PARAMS up
 
 
 
+### Compile the Code
+
+```bash
+$ make build
+```
