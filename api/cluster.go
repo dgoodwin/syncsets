@@ -8,10 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type ClusterItem struct {
-	ID      int
-	Cluster Cluster
-}
+var _ APIResource = &Cluster{}
 
 type Cluster struct {
 	Name       string `json:"name"`
@@ -37,4 +34,13 @@ func (a *Cluster) Scan(value interface{}) error {
 	}
 
 	return json.Unmarshal(b, &a)
+}
+
+func (a *Cluster) APIVersion() string {
+	return "clusters"
+}
+
+type ClusterItem struct {
+	ID      int
+	Cluster Cluster
 }

@@ -12,10 +12,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 )
 
-type SyncSetItem struct {
-	ID      int
-	SyncSet SelectorSyncSet
-}
+var _ APIResource = &Cluster{}
 
 // SyncSetResourceApplyMode is a string representing the mode with which to
 // apply SyncSet Resources.
@@ -350,4 +347,13 @@ func (a *SelectorSyncSet) Scan(value interface{}) error {
 	}
 
 	return json.Unmarshal(b, &a)
+}
+
+func (a *SyncSet) APIVersion() string {
+	return "syncsets"
+}
+
+type SyncSetItem struct {
+	ID      int
+	SyncSet SelectorSyncSet
 }

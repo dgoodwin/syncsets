@@ -4,7 +4,7 @@ IMG ?= quay.io/dgoodwin/syncsets:latest
 .PHONY: build
 build:
 	go build -o bin/syncsets-api github.com/dgoodwin/syncsets/api/cmd
-	go build -o bin/syncsets-controllers github.com/dgoodwin/syncsets/controllers//cmd
+	go build -o bin/syncsets-controllers github.com/dgoodwin/syncsets/controllers/cmd
 
 .PHONY: docker-push
 docker-push: build

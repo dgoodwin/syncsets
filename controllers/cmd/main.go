@@ -1,9 +1,13 @@
 package main
 
 import (
+	"context"
+	"github.com/dgoodwin/syncsets/api"
+	"github.com/dgoodwin/syncsets/api/client"
 	"github.com/dgoodwin/syncsets/controllers"
 	log "github.com/sirupsen/logrus"
 	"github.com/streadway/amqp"
+	"k8s.io/apimachinery/pkg/types"
 )
 
 func main() {
@@ -35,8 +39,16 @@ func main() {
 		log.WithError(err).Fatal("error consuming from queue")
 	}
 
-	c := controllers.ReconcileClusterSync{}
-	log.Infof("created syncset controller: %v", c)
+	syncCtrlr := controllers.ReconcileClusterSync{}
+	log.Infof("created syncset controller: %v", syncCtrlr)
+
+	client := client.NewAPIClient("http://syncsets-api:8080/")
+	cluster := &api.Cluster{}
+	err = client.Get(context.Background(), types.NamespacedName{Name: "1"}, cluster)
+	if err != nil {
+		log.WithError(err).Fatal("error getting cluster")
+	}
+	log.WithField("cluster", cluster).Info("got cluster")
 
 	forever := make(chan bool)
 	go func() {
