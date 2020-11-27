@@ -15,7 +15,7 @@ func main() {
 	log.Info("running syncsets-api")
 	r := mux.NewRouter().StrictSlash(true)
 
-	conn, err := amqp.Dial("amqp://ffY5PQ_tMehsn2tryfCDvuEvVDIBoLYu:Sp7vDEG8J_E62XFi-6r3XWBQJJi0T1Sy@localhost:5672/")
+	conn, err := amqp.Dial("amqp://ffY5PQ_tMehsn2tryfCDvuEvVDIBoLYu:Sp7vDEG8J_E62XFi-6r3XWBQJJi0T1Sy@rabbitmq:5672/")
 	if err != nil {
 		log.WithError(err).Fatal("error connecting to to rabbitmq")
 	}
@@ -27,7 +27,7 @@ func main() {
 	}
 	defer ch.Close()
 
-	db, err := sql.Open("postgres", "user=postgres password=WYZVrmtdvuQlsq4hvo8C host=localhost dbname=syncsets sslmode=disable")
+	db, err := sql.Open("postgres", "user=postgres password=WYZVrmtdvuQlsq4hvo8C host=postgresql dbname=syncsets sslmode=disable")
 	if err != nil {
 		log.WithError(err).Fatal("error connecting to database")
 	}

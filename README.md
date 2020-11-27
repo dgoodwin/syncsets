@@ -73,10 +73,16 @@ $ goose postgres $GOOSE_PARAMS up
 $ make build
 ```
 
+### Compile Build Push Deploy
+
+```bash
+$ IMG="quay.io/dgoodwin/syncsets:latest" make docker-push deploy
+```
 
 ### Load Some Data
 
 ```bash
+$ kubectl port-forward svc/syncsets-api 8080:8080 &
 $ curl --header "Content-Type: application/json" --request POST -d @examples/cluster.json http://localhost:8080/clusters
 $ curl --header "Content-Type: application/json" --request POST -d @examples/syncset.json http://localhost:8080/syncsets
 ```
