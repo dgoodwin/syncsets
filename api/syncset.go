@@ -339,6 +339,10 @@ func (a SelectorSyncSet) Value() (driver.Value, error) {
 	return json.Marshal(a)
 }
 
+func (a SelectorSyncSet) Marshal() ([]byte, error) {
+	return json.Marshal(a)
+}
+
 // Implement the sql.Scanner interface to decode a JSON-encoded value into the struct fields.
 func (a *SelectorSyncSet) Scan(value interface{}) error {
 	b, ok := value.([]byte)
@@ -349,7 +353,7 @@ func (a *SelectorSyncSet) Scan(value interface{}) error {
 	return json.Unmarshal(b, &a)
 }
 
-func (a *SyncSet) APIVersion() string {
+func (a *SelectorSyncSet) APIVersion() string {
 	return "syncsets"
 }
 

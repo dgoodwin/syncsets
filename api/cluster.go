@@ -26,6 +26,10 @@ func (a Cluster) Value() (driver.Value, error) {
 	return json.Marshal(a)
 }
 
+func (a Cluster) Marshal() ([]byte, error) {
+	return json.Marshal(a)
+}
+
 // Implement the sql.Scanner interface to decode a JSON-encoded value into the struct fields.
 func (a *Cluster) Scan(value interface{}) error {
 	b, ok := value.([]byte)

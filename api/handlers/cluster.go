@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"database/sql"
-	"encoding/json"
+	//"encoding/json"
 	"fmt"
 	"github.com/dgoodwin/syncsets/api"
 	log "github.com/sirupsen/logrus"
@@ -11,27 +11,45 @@ import (
 )
 
 type ClusterHandler struct {
-	logger log.FieldLogger
-	db     *sql.DB
+	logger   log.FieldLogger
+	db       *sql.DB
+	registry *api.Registry
 }
 
 func NewClusterHandler(db *sql.DB) *ClusterHandler {
 	return &ClusterHandler{
-		db:     db,
-		logger: log.WithField("handler", "cluster"),
+		db:       db,
+		logger:   log.WithField("handler", "cluster"),
+		registry: api.NewRegistry(),
 	}
 }
 
 func (h *ClusterHandler) Get(resp http.ResponseWriter, req *http.Request) {
-	h.logger.Info("called Get")
+	h.logger.Info("called Get handler")
+	h.logger.Infof("url path: %s", req.URL.Path)
+	resource := req.URL.Path[1:]
+	h.logger.Infof("working with resource: %s", resource)
 	item := new(api.ClusterItem)
-	err := h.db.QueryRow("SELECT id, data FROM clusters ORDER BY id DESC LIMIT 1").Scan(&item.ID, &item.Cluster)
+	/*
+		 	TODO: if this would work we'd be very close at a generic API handler.
+
+			r, err := h.registry.GetResource(resource)
+			if err != nil {
+				log.WithError(err).Error("error getting resource")
+				return
+			}
+	*/
+	r := &api.Cluster{}
+	err := h.db.QueryRow(
+		fmt.Sprintf("SELECT id, data FROM %s ORDER BY id DESC LIMIT 1", resource)).Scan(&item.ID, &r)
 	if err != nil {
 		log.WithError(err).Error("error querying db")
+		return
 	}
-	jsonBytes, err := json.Marshal(item.Cluster)
+	jsonBytes, err := r.Marshal()
 	if err != nil {
 		log.WithError(err).Error("error marshalling json")
+		return
 	}
 	fmt.Fprintf(resp, string(jsonBytes))
 }
