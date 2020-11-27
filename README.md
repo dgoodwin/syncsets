@@ -19,6 +19,12 @@ $ kubectl apply -f manifests/rabbitmq-cluster.yaml
 $ oc adm policy add-scc-to-user rabbitmq-cluster -z rabbitmq-server
 ```
 
+Once running you can check in with:
+
+```bash
+$ oc rsh rabbitmq-server-0 rabbitmqctl cluster_status
+```
+
 ### Create a PostgreSQL Database
 
 Several options here:
