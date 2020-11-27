@@ -1,0 +1,33 @@
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: rabbitmq-cluster
+allowPrivilegedContainer: false
+runAsUser:
+  type: MustRunAsRange
+seLinuxContext:
+  type: MustRunAs
+fsGroup:
+  type: MustRunAs
+supplementalGroups:
+  type: RunAsAny
+requiredDropCapabilities:
+  - "ALL"
+allowedCapabilities:
+  - "FOWNER"
+  - "CHOWN"
+volumes:
+  - "configMap"
+  - "secret"
+  - "persistentVolumeClaim"
+  - "downwardAPI"
+  - "emptyDir"
+  - "projected"
+# missing in the rabbitmq docs for openshift:
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+allowPrivilegedContainer: false # TODO: is this needed?
+readOnlyRootFilesystem: false

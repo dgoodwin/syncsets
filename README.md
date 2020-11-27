@@ -4,6 +4,21 @@ Prototype for an operator like application not depending on Kubernetes CRDs or A
 
 ## Development
 
+All instructions assume running in an OpenShift 4 cluster.
+
+### Launch RabbitMQ
+
+This project presently aims to use RabbitMQ for pub/sub consumers who wish to watch API events.
+
+Using the [RabbitMQ Operator](https://www.rabbitmq.com/kubernetes/operator/operator-overview.html), this process involves some resources I had to patch.
+
+```bash
+$ kubectl apply -f manifests/rabbitmq-operator/
+$ kubectl apply -f manifests/namespace.yaml
+$ kubectl apply -f manifests/rabbitmq-cluster.yaml
+$ oc adm policy add-scc-to-user rabbitmq-cluster -z rabbitmq-server
+```
+
 ### Create a PostgreSQL Database
 
 Several options here:
@@ -14,6 +29,9 @@ Several options here:
   1. Amazon RDS: Choose free tier and public access.
 
 Note your password and ensure you've created a database called `syncsets`:
+
+
+Establish a local port forward if running on OpenShift.
 
 ```bash
 $ export PGPASSWORD=MYPASS

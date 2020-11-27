@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    # For rabbitmq:
+    openshift.io/sa.scc.supplemental-groups: 999/1
+    openshift.io/sa.scc.uid-range: 0-999
+  name: syncsets
+
