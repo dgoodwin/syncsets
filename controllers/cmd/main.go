@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/dgoodwin/syncsets/controllers"
 	log "github.com/sirupsen/logrus"
 	"github.com/streadway/amqp"
 )
@@ -33,6 +34,9 @@ func main() {
 	if err != nil {
 		log.WithError(err).Fatal("error consuming from queue")
 	}
+
+	c := controllers.ReconcileClusterSync{}
+	log.Infof("created syncset controller: %v", c)
 
 	forever := make(chan bool)
 	go func() {
