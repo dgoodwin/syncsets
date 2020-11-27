@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: syncsets-controllers
+  namespace: syncsets
+  labels:
+    app: syncsets-controllers
+spec:
+  selector:
+    matchLabels:
+      app: syncsets-controllers
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: syncsets-controllers
+    spec:
+      containers:
+      # By default we will use the latest CI images published from hive master:
+      - image: quay.io/dgoodwin/syncsets:latest
+        imagePullPolicy: Always
+        name: controllers
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+        command:
+          - /opt/services/syncsets-controllers
+---

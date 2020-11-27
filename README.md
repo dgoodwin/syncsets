@@ -36,7 +36,6 @@ Several options here:
 
 Note your password and ensure you've created a database called `syncsets`:
 
-
 Establish a local port forward if running on OpenShift.
 
 ```bash
@@ -64,8 +63,6 @@ Apply the database schema:
 $ export GOOSE_PARAMS="user=postgres dbname=syncsets sslmode=disable host=localhost password=MYPASS"
 $ goose postgres $GOOSE_PARAMS up
 ```
-
-
 
 ### Compile the Code
 
