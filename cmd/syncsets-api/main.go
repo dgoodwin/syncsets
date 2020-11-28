@@ -2,7 +2,7 @@ package main
 
 import (
 	"database/sql"
-	"github.com/dgoodwin/syncsets/api/handlers"
+	"github.com/dgoodwin/syncsets/handlers"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	log "github.com/sirupsen/logrus"

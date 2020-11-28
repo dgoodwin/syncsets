@@ -70,6 +70,8 @@ func (h *ClusterHandler) Post(resp http.ResponseWriter, req *http.Request) {
 	}
 	h.logger.WithField("cluster", cluster.Name).Info("called post and parsed cluster")
 
+	// TODO: require namespace to exist?
+
 	// The database driver will call the Value() method and and marshall the
 	// attrs struct to JSON before the INSERT.
 	_, err = h.db.Exec("INSERT INTO clusters (name, namespace, data) VALUES($1, $2, $3)", cluster.Name, cluster.Namespace, cluster)
