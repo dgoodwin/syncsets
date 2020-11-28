@@ -1,0 +1,18 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: syncsets-api
+  name: syncsets-api
+  namespace: syncsets
+spec:
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: None
+    termination: edge
+  to:
+    kind: Service
+    name: syncsets-api
+    weight: 100
+  wildcardPolicy: None
