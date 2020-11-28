@@ -1,4 +1,5 @@
 {
 	"name": "cluster1",
+	"namespace": "foo",
 	"kubeconfig": "foobar"
 }

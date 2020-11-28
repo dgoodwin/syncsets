@@ -54,7 +54,7 @@ func (h *SyncSetHandler) Post(resp http.ResponseWriter, req *http.Request) {
 
 	// The database driver will call the Value() method and and marshall the
 	// attrs struct to JSON before the INSERT.
-	_, err = h.db.Exec("INSERT INTO syncsets (data) VALUES($1)", ss)
+	_, err = h.db.Exec("INSERT INTO syncsets (name, namespace, data) VALUES($1, $2, $3)", ss.Name, ss.Namespace, ss)
 	if err != nil {
 		log.WithError(err).Error("error inserting into db")
 		fmt.Fprintf(resp, "error inserting into db")

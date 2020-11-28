@@ -12,6 +12,7 @@ var _ APIResource = &Cluster{}
 
 type Cluster struct {
 	Name       string `json:"name"`
+	Namespace  string `json:"namespace"`
 	Kubeconfig string `json:"kubeconfig"`
 	/*
 		Ingredients []string `json:"ingredients,omitempty"`
