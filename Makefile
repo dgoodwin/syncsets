@@ -18,6 +18,7 @@ deploy:
 	oc delete pod -l app=syncsets-api --wait=false
 	oc delete pod -l app=syncsets-controllers --wait=false
 
+# Overwrites swagger.yaml. We consider the code and godoc in api/ authoritative.
 .PHONY: swagger-spec
 swagger-spec:
 	swagger generate spec -o ./swagger.yaml -m
