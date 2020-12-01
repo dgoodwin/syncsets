@@ -24,24 +24,27 @@ func NewClusterHandler(db *sql.DB) *ClusterHandler {
 	}
 }
 
-func (h *ClusterHandler) Get(resp http.ResponseWriter, req *http.Request) {
-	h.logger.Info("called Get handler")
-	h.logger.Infof("url path: %s", req.URL.Path)
-	resource := req.URL.Path[1:]
-	h.logger.Infof("working with resource: %s", resource)
-	item := new(api.ClusterItem)
-	/*
-		 	TODO: if this would work we'd be very close at a generic API handler.
+func GetResourceType(req *http.Request) (string, error) {
+	return req.URL.Path[1:], nil
+}
 
-			r, err := h.registry.GetResource(resource)
-			if err != nil {
-				log.WithError(err).Error("error getting resource")
-				return
-			}
-	*/
-	r := &api.Cluster{}
-	err := h.db.QueryRow(
-		fmt.Sprintf("SELECT id, data FROM %s ORDER BY id DESC LIMIT 1", resource)).Scan(&item.ID, &r)
+func (h *ClusterHandler) Get(resp http.ResponseWriter, req *http.Request) {
+	h.logger.Info("called get handler")
+	resource, err := GetResourceType(req)
+	if err != nil {
+		log.WithError(err).Error("error getting resource")
+		return
+	}
+	h.logger.Infof("working with resource: %s", resource)
+	r, err := h.registry.GetResource(resource)
+	if err != nil {
+		log.WithError(err).Error("error getting resource")
+		return
+	}
+	row := h.db.QueryRow(
+		fmt.Sprintf("SELECT data FROM %s ORDER BY id DESC LIMIT 1", resource))
+
+	err = r.RowScan(row)
 	if err != nil {
 		log.WithError(err).Error("error querying db")
 		return
@@ -55,7 +58,7 @@ func (h *ClusterHandler) Get(resp http.ResponseWriter, req *http.Request) {
 }
 
 func (h *ClusterHandler) Post(resp http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(resp, "called post cluster handler")
+	fmt.Fprintf(resp, "called post handler")
 	reqBody, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		log.WithError(err).Error("error reading request body")

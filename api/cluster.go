@@ -1,6 +1,7 @@
 package api
 
 import (
+	"database/sql"
 	"database/sql/driver"
 	"encoding/json"
 	"errors"
@@ -39,6 +40,10 @@ func (a *Cluster) Scan(value interface{}) error {
 	}
 
 	return json.Unmarshal(b, &a)
+}
+
+func (a *Cluster) RowScan(row *sql.Row) error {
+	return row.Scan(a)
 }
 
 func (a *Cluster) APIVersion() string {

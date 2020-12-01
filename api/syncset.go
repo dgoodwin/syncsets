@@ -1,6 +1,7 @@
 package api
 
 import (
+	"database/sql"
 	"database/sql/driver"
 	"encoding/json"
 	"errors"
@@ -351,6 +352,10 @@ func (a *SelectorSyncSet) Scan(value interface{}) error {
 	}
 
 	return json.Unmarshal(b, &a)
+}
+
+func (a *SelectorSyncSet) RowScan(row *sql.Row) error {
+	return row.Scan(a)
 }
 
 func (a *SelectorSyncSet) APIVersion() string {

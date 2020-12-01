@@ -1,8 +1,12 @@
 package api
 
-// Re-using SQL interfaces to define our json marshalling functions for now.
+import (
+	"database/sql"
+)
+
 type APIResource interface {
-	Scan(value interface{}) error
+	RowScan(row *sql.Row) error
 	Marshal() ([]byte, error)
+	Scan(value interface{}) error
 	APIVersion() string // to find db tables and api endpoints
 }
