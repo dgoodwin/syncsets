@@ -1,0 +1,41 @@
+definitions:
+  cluster:
+    properties:
+      kubeconfig:
+        description: Kubeconfig is an admin kubeconfig file for communicating with
+          the cluster.
+        type: string
+        x-go-name: Kubeconfig
+      name:
+        description: Name of the cluster.
+        type: string
+        x-go-name: Name
+      namespace:
+        description: |-
+          Namespace of the cluster. Models the Kubernetes concept of Namespace as OpenShift Hive
+          uses that to allow multiple clusters with the same name, separated by owner.
+        type: string
+        x-go-name: Namespace
+    required:
+    - name
+    - namespace
+    - kubeconfig
+    title: Cluster is a representation of a Cluster we will reconcile SyncSets to.
+    type: object
+    x-go-name: Cluster
+    x-go-package: github.com/dgoodwin/syncsets/api
+paths: {}
+swagger: "2.0"
+info:
+  version: 0.0.1
+  title: SyncSets
+  description: |
+    This is a prototype port of OpenShift Hive's SyncSets API to a standalone application, not
+    dependent on Kubernetes API, CustomResources, or etcd storage.
+  license:
+    name: 'Apache 2.0'
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Devan Goodwin
+    email: dgoodwin@redhat.com
+    url: https://github.com/dgoodwin

@@ -20,5 +20,5 @@ deploy:
 
 .PHONY: swagger-spec
 swagger-spec:
-	swagger generate spec -o ./swagger.json -m
+	swagger generate spec -o ./swagger.yaml -m
 

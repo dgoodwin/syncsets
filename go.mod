@@ -3,7 +3,10 @@ module github.com/dgoodwin/syncsets
 go 1.15
 
 require (
-	github.com/go-openapi/validate v0.19.15 // indirect
+	github.com/go-openapi/errors v0.19.9
+	github.com/go-openapi/strfmt v0.19.11
+	github.com/go-openapi/swag v0.19.12
+	github.com/go-openapi/validate v0.19.15
 	github.com/go-swagger/go-swagger v0.25.0 // indirect
 	github.com/golang/mock v1.4.4
 	github.com/gorilla/handlers v1.5.1 // indirect
