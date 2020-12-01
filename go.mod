@@ -3,15 +3,26 @@ module github.com/dgoodwin/syncsets
 go 1.15
 
 require (
+	github.com/go-openapi/validate v0.19.15 // indirect
+	github.com/go-swagger/go-swagger v0.25.0 // indirect
 	github.com/golang/mock v1.4.4
+	github.com/gorilla/handlers v1.5.1 // indirect
 	github.com/gorilla/mux v1.8.0
+	github.com/kr/pretty v0.2.1 // indirect
 	github.com/lib/pq v1.8.0
+	github.com/magiconair/properties v1.8.4 // indirect
 	github.com/openshift/hive v1.0.14
+	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.8.0
 	github.com/sirupsen/logrus v1.7.0
+	github.com/spf13/afero v1.4.1 // indirect
+	github.com/spf13/viper v1.7.1 // indirect
 	github.com/streadway/amqp v1.0.0
 	github.com/stretchr/testify v1.6.1
+	golang.org/x/sys v0.0.0-20201130171929-760e229fe7c5 // indirect
+	golang.org/x/tools v0.0.0-20201201064407-fd09bd90d85c // indirect
+	gopkg.in/ini.v1 v1.62.0 // indirect
 	k8s.io/api v0.19.4
 	k8s.io/apimachinery v0.19.4
 	k8s.io/client-go v12.0.0+incompatible

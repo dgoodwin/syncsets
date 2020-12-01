@@ -11,9 +11,22 @@ import (
 
 var _ APIResource = &Cluster{}
 
+// Cluster is a representation of a Cluster we will reconcile SyncSets to.
+//
+// swagger:model cluster
 type Cluster struct {
-	Name       string `json:"name"`
-	Namespace  string `json:"namespace"`
+	// Name of the cluster.
+	//
+	// required: true
+	Name string `json:"name"`
+	// Namespace of the cluster. Models the Kubernetes concept of Namespace as OpenShift Hive
+	// uses that to allow multiple clusters with the same name, separated by owner.
+	//
+	// required: true
+	Namespace string `json:"namespace"`
+	// Kubeconfig is an admin kubeconfig file for communicating with the cluster.
+	//
+	// required: true
 	Kubeconfig string `json:"kubeconfig"`
 	/*
 		Ingredients []string `json:"ingredients,omitempty"`

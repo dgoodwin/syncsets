@@ -6,6 +6,14 @@ Prototype for an operator like application not depending on Kubernetes CRDs or A
 
 All instructions assume running in an OpenShift 4 cluster.
 
+### Install go-swagger
+
+Used to generate API handlers, go client code, and documentation.
+
+```bash
+$ go get -u github.com/go-swagger/go-swagger/cmd/swagger
+```
+
 ### Launch RabbitMQ
 
 This project presently aims to use RabbitMQ for pub/sub consumers who wish to watch API events.

@@ -18,3 +18,7 @@ deploy:
 	oc delete pod -l app=syncsets-api --wait=false
 	oc delete pod -l app=syncsets-controllers --wait=false
 
+.PHONY: swagger-spec
+swagger-spec:
+	swagger generate spec -o ./swagger.json -m
+

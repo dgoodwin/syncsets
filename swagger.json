@@ -1,0 +1,34 @@
+{
+  "swagger": "2.0",
+  "paths": {},
+  "definitions": {
+    "cluster": {
+      "type": "object",
+      "title": "Cluster is a representation of a Cluster we will reconcile SyncSets to.",
+      "required": [
+        "name",
+        "namespace",
+        "kubeconfig"
+      ],
+      "properties": {
+        "kubeconfig": {
+          "description": "Kubeconfig is an admin kubeconfig file for communicating with the cluster.",
+          "type": "string",
+          "x-go-name": "Kubeconfig"
+        },
+        "name": {
+          "description": "Name of the cluster.",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "namespace": {
+          "description": "Namespace of the cluster. Models the Kubernetes concept of Namespace as OpenShift Hive\nuses that to allow multiple clusters with the same name, separated by owner.",
+          "type": "string",
+          "x-go-name": "Namespace"
+        }
+      },
+      "x-go-name": "Cluster",
+      "x-go-package": "github.com/dgoodwin/syncsets/api"
+    }
+  }
+}
