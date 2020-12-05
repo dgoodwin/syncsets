@@ -1,3 +1,19 @@
+host: localhost
+info:
+  contact:
+    email: dgoodwin@redhat.com
+    name: Devan Goodwin
+  description: Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.
+  license:
+    name: Apache2
+  title: SyncSets API.
+  version: 0.0.1
+paths: {}
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
 basePath: /v1
 consumes:
 - application/json
@@ -27,19 +43,29 @@ definitions:
     type: object
     x-go-name: Cluster
     x-go-package: github.com/dgoodwin/syncsets/api
-host: localhost
-info:
-  contact:
-    email: dgoodwin@redhat.com
-    name: Devan Goodwin
-  description: Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.
-  license:
-    name: Apache2
-  title: SyncSets API.
-  version: 0.0.1
-paths: {}
-produces:
-- application/json
-schemes:
-- http
-swagger: "2.0"
+  error:
+    type: object
+    required:
+      - message
+    properties:
+      code:
+        type: integer
+        format: int64
+      message:
+        type: string
+paths:
+  /:
+    get:
+      tags:
+        - clusters
+      responses:
+        200:
+          description: list the clusters
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/cluster"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/error"
