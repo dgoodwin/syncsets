@@ -13,18 +13,18 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NewDestroyOneParams creates a new DestroyOneParams object
+// NewDeleteParams creates a new DeleteParams object
 // no default values defined in spec.
-func NewDestroyOneParams() DestroyOneParams {
+func NewDeleteParams() DeleteParams {
 
-	return DestroyOneParams{}
+	return DeleteParams{}
 }
 
-// DestroyOneParams contains all the bound params for the destroy one operation
+// DeleteParams contains all the bound params for the delete operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters destroyOne
-type DestroyOneParams struct {
+// swagger:parameters delete
+type DeleteParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -39,8 +39,8 @@ type DestroyOneParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewDestroyOneParams() beforehand.
-func (o *DestroyOneParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewDeleteParams() beforehand.
+func (o *DeleteParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
@@ -57,7 +57,7 @@ func (o *DestroyOneParams) BindRequest(r *http.Request, route *middleware.Matche
 }
 
 // bindName binds and validates parameter Name from path.
-func (o *DestroyOneParams) bindName(rawData []string, hasKey bool, formats strfmt.Registry) error {
+func (o *DeleteParams) bindName(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]

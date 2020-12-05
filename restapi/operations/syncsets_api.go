@@ -47,11 +47,11 @@ func NewSyncsetsAPI(spec *loads.Document) *SyncsetsAPI {
 		ClustersGetClustersHandler: clusters.GetClustersHandlerFunc(func(params clusters.GetClustersParams) middleware.Responder {
 			return middleware.NotImplemented("operation clusters.GetClusters has not yet been implemented")
 		}),
-		ClustersCreateOrUpdateOneHandler: clusters.CreateOrUpdateOneHandlerFunc(func(params clusters.CreateOrUpdateOneParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.CreateOrUpdateOne has not yet been implemented")
+		ClustersDeleteHandler: clusters.DeleteHandlerFunc(func(params clusters.DeleteParams) middleware.Responder {
+			return middleware.NotImplemented("operation clusters.Delete has not yet been implemented")
 		}),
-		ClustersDestroyOneHandler: clusters.DestroyOneHandlerFunc(func(params clusters.DestroyOneParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.DestroyOne has not yet been implemented")
+		ClustersUpdateHandler: clusters.UpdateHandlerFunc(func(params clusters.UpdateParams) middleware.Responder {
+			return middleware.NotImplemented("operation clusters.Update has not yet been implemented")
 		}),
 	}
 }
@@ -89,10 +89,10 @@ type SyncsetsAPI struct {
 
 	// ClustersGetClustersHandler sets the operation handler for the get clusters operation
 	ClustersGetClustersHandler clusters.GetClustersHandler
-	// ClustersCreateOrUpdateOneHandler sets the operation handler for the create or update one operation
-	ClustersCreateOrUpdateOneHandler clusters.CreateOrUpdateOneHandler
-	// ClustersDestroyOneHandler sets the operation handler for the destroy one operation
-	ClustersDestroyOneHandler clusters.DestroyOneHandler
+	// ClustersDeleteHandler sets the operation handler for the delete operation
+	ClustersDeleteHandler clusters.DeleteHandler
+	// ClustersUpdateHandler sets the operation handler for the update operation
+	ClustersUpdateHandler clusters.UpdateHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -172,11 +172,11 @@ func (o *SyncsetsAPI) Validate() error {
 	if o.ClustersGetClustersHandler == nil {
 		unregistered = append(unregistered, "clusters.GetClustersHandler")
 	}
-	if o.ClustersCreateOrUpdateOneHandler == nil {
-		unregistered = append(unregistered, "clusters.CreateOrUpdateOneHandler")
+	if o.ClustersDeleteHandler == nil {
+		unregistered = append(unregistered, "clusters.DeleteHandler")
 	}
-	if o.ClustersDestroyOneHandler == nil {
-		unregistered = append(unregistered, "clusters.DestroyOneHandler")
+	if o.ClustersUpdateHandler == nil {
+		unregistered = append(unregistered, "clusters.UpdateHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -270,14 +270,14 @@ func (o *SyncsetsAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/clusters"] = clusters.NewGetClusters(o.context, o.ClustersGetClustersHandler)
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/clusters/{name}"] = clusters.NewCreateOrUpdateOne(o.context, o.ClustersCreateOrUpdateOneHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/clusters/{name}"] = clusters.NewDestroyOne(o.context, o.ClustersDestroyOneHandler)
+	o.handlers["DELETE"]["/clusters/{name}"] = clusters.NewDelete(o.context, o.ClustersDeleteHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/clusters/{name}"] = clusters.NewUpdate(o.context, o.ClustersUpdateHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

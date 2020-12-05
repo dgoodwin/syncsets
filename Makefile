@@ -30,7 +30,9 @@ swagger-validate:
 
 .PHONY: swagger-gen
 swagger-gen:
+	rm -rf restapi/operations
 	swagger generate server -A syncsets -f ./swagger.yaml
+	swagger generate client -A syncsets -f ./swagger.yaml
 
 .PHONY: install
 install: swagger-gen

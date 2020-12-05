@@ -78,7 +78,7 @@ paths:
     put:
       tags:
         - clusters
-      operationId: createOrUpdateOne
+      operationId: update
       parameters:
         - name: body
           in: body
@@ -96,7 +96,7 @@ paths:
     delete:
       tags:
         - clusters
-      operationId: destroyOne
+      operationId: delete
       responses:
         204:
           description: Deleted

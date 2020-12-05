@@ -12,8 +12,8 @@ import (
 	"strings"
 )
 
-// CreateOrUpdateOneURL generates an URL for the create or update one operation
-type CreateOrUpdateOneURL struct {
+// UpdateURL generates an URL for the update operation
+type UpdateURL struct {
 	Name string
 
 	_basePath string
@@ -24,7 +24,7 @@ type CreateOrUpdateOneURL struct {
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *CreateOrUpdateOneURL) WithBasePath(bp string) *CreateOrUpdateOneURL {
+func (o *UpdateURL) WithBasePath(bp string) *UpdateURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -32,12 +32,12 @@ func (o *CreateOrUpdateOneURL) WithBasePath(bp string) *CreateOrUpdateOneURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *CreateOrUpdateOneURL) SetBasePath(bp string) {
+func (o *UpdateURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *CreateOrUpdateOneURL) Build() (*url.URL, error) {
+func (o *UpdateURL) Build() (*url.URL, error) {
 	var _result url.URL
 
 	var _path = "/clusters/{name}"
@@ -46,7 +46,7 @@ func (o *CreateOrUpdateOneURL) Build() (*url.URL, error) {
 	if name != "" {
 		_path = strings.Replace(_path, "{name}", name, -1)
 	} else {
-		return nil, errors.New("name is required on CreateOrUpdateOneURL")
+		return nil, errors.New("name is required on UpdateURL")
 	}
 
 	_basePath := o._basePath
@@ -59,7 +59,7 @@ func (o *CreateOrUpdateOneURL) Build() (*url.URL, error) {
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *CreateOrUpdateOneURL) Must(u *url.URL, err error) *url.URL {
+func (o *UpdateURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -70,17 +70,17 @@ func (o *CreateOrUpdateOneURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *CreateOrUpdateOneURL) String() string {
+func (o *UpdateURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *CreateOrUpdateOneURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *UpdateURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on CreateOrUpdateOneURL")
+		return nil, errors.New("scheme is required for a full url on UpdateURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on CreateOrUpdateOneURL")
+		return nil, errors.New("host is required for a full url on UpdateURL")
 	}
 
 	base, err := o.Build()
@@ -94,6 +94,6 @@ func (o *CreateOrUpdateOneURL) BuildFull(scheme, host string) (*url.URL, error) 
 }
 
 // StringFull returns the string representation of a complete url
-func (o *CreateOrUpdateOneURL) StringFull(scheme, host string) string {
+func (o *UpdateURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }

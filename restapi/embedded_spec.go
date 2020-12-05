@@ -72,7 +72,7 @@ func init() {
         "tags": [
           "clusters"
         ],
-        "operationId": "createOrUpdateOne",
+        "operationId": "update",
         "parameters": [
           {
             "name": "body",
@@ -101,7 +101,7 @@ func init() {
         "tags": [
           "clusters"
         ],
-        "operationId": "destroyOne",
+        "operationId": "delete",
         "responses": {
           "204": {
             "description": "Deleted"
@@ -225,7 +225,7 @@ func init() {
         "tags": [
           "clusters"
         ],
-        "operationId": "createOrUpdateOne",
+        "operationId": "update",
         "parameters": [
           {
             "name": "body",
@@ -254,7 +254,7 @@ func init() {
         "tags": [
           "clusters"
         ],
-        "operationId": "destroyOne",
+        "operationId": "delete",
         "responses": {
           "204": {
             "description": "Deleted"

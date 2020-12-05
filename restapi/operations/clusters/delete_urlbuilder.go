@@ -12,8 +12,8 @@ import (
 	"strings"
 )
 
-// DestroyOneURL generates an URL for the destroy one operation
-type DestroyOneURL struct {
+// DeleteURL generates an URL for the delete operation
+type DeleteURL struct {
 	Name string
 
 	_basePath string
@@ -24,7 +24,7 @@ type DestroyOneURL struct {
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *DestroyOneURL) WithBasePath(bp string) *DestroyOneURL {
+func (o *DeleteURL) WithBasePath(bp string) *DeleteURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -32,12 +32,12 @@ func (o *DestroyOneURL) WithBasePath(bp string) *DestroyOneURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *DestroyOneURL) SetBasePath(bp string) {
+func (o *DeleteURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *DestroyOneURL) Build() (*url.URL, error) {
+func (o *DeleteURL) Build() (*url.URL, error) {
 	var _result url.URL
 
 	var _path = "/clusters/{name}"
@@ -46,7 +46,7 @@ func (o *DestroyOneURL) Build() (*url.URL, error) {
 	if name != "" {
 		_path = strings.Replace(_path, "{name}", name, -1)
 	} else {
-		return nil, errors.New("name is required on DestroyOneURL")
+		return nil, errors.New("name is required on DeleteURL")
 	}
 
 	_basePath := o._basePath
@@ -59,7 +59,7 @@ func (o *DestroyOneURL) Build() (*url.URL, error) {
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *DestroyOneURL) Must(u *url.URL, err error) *url.URL {
+func (o *DeleteURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -70,17 +70,17 @@ func (o *DestroyOneURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *DestroyOneURL) String() string {
+func (o *DeleteURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *DestroyOneURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *DeleteURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on DestroyOneURL")
+		return nil, errors.New("scheme is required for a full url on DeleteURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on DestroyOneURL")
+		return nil, errors.New("host is required for a full url on DeleteURL")
 	}
 
 	base, err := o.Build()
@@ -94,6 +94,6 @@ func (o *DestroyOneURL) BuildFull(scheme, host string) (*url.URL, error) {
 }
 
 // StringFull returns the string representation of a complete url
-func (o *DestroyOneURL) StringFull(scheme, host string) string {
+func (o *DeleteURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }
