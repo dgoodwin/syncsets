@@ -54,7 +54,7 @@ definitions:
       message:
         type: string
 paths:
-  /:
+  /clusters:
     get:
       tags:
         - clusters

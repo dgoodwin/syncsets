@@ -43,7 +43,7 @@ func init() {
   "host": "localhost",
   "basePath": "/v1",
   "paths": {
-    "/": {
+    "/clusters": {
       "get": {
         "tags": [
           "clusters"
@@ -140,7 +140,7 @@ func init() {
   "host": "localhost",
   "basePath": "/v1",
   "paths": {
-    "/": {
+    "/clusters": {
       "get": {
         "tags": [
           "clusters"

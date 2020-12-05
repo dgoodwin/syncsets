@@ -11,15 +11,15 @@ import (
 	golangswaggerpaths "path"
 )
 
-// GetURL generates an URL for the get operation
-type GetURL struct {
+// GetClustersURL generates an URL for the get clusters operation
+type GetClustersURL struct {
 	_basePath string
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *GetURL) WithBasePath(bp string) *GetURL {
+func (o *GetClustersURL) WithBasePath(bp string) *GetClustersURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -27,15 +27,15 @@ func (o *GetURL) WithBasePath(bp string) *GetURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *GetURL) SetBasePath(bp string) {
+func (o *GetClustersURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *GetURL) Build() (*url.URL, error) {
+func (o *GetClustersURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/"
+	var _path = "/clusters"
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -47,7 +47,7 @@ func (o *GetURL) Build() (*url.URL, error) {
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *GetURL) Must(u *url.URL, err error) *url.URL {
+func (o *GetClustersURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -58,17 +58,17 @@ func (o *GetURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *GetURL) String() string {
+func (o *GetClustersURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *GetURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *GetClustersURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on GetURL")
+		return nil, errors.New("scheme is required for a full url on GetClustersURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on GetURL")
+		return nil, errors.New("host is required for a full url on GetClustersURL")
 	}
 
 	base, err := o.Build()
@@ -82,6 +82,6 @@ func (o *GetURL) BuildFull(scheme, host string) (*url.URL, error) {
 }
 
 // StringFull returns the string representation of a complete url
-func (o *GetURL) StringFull(scheme, host string) string {
+func (o *GetClustersURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }

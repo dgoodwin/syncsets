@@ -38,9 +38,9 @@ func configureAPI(api *operations.SyncsetsAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.ClustersGetHandler == nil {
-		api.ClustersGetHandler = clusters.GetHandlerFunc(func(params clusters.GetParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.Get has not yet been implemented")
+	if api.ClustersGetClustersHandler == nil {
+		api.ClustersGetClustersHandler = clusters.GetClustersHandlerFunc(func(params clusters.GetClustersParams) middleware.Responder {
+			return middleware.NotImplemented("operation clusters.GetClusters has not yet been implemented")
 		})
 	}
 

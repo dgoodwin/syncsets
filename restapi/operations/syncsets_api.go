@@ -44,8 +44,8 @@ func NewSyncsetsAPI(spec *loads.Document) *SyncsetsAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		ClustersGetHandler: clusters.GetHandlerFunc(func(params clusters.GetParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.Get has not yet been implemented")
+		ClustersGetClustersHandler: clusters.GetClustersHandlerFunc(func(params clusters.GetClustersParams) middleware.Responder {
+			return middleware.NotImplemented("operation clusters.GetClusters has not yet been implemented")
 		}),
 	}
 }
@@ -81,8 +81,8 @@ type SyncsetsAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
-	// ClustersGetHandler sets the operation handler for the get operation
-	ClustersGetHandler clusters.GetHandler
+	// ClustersGetClustersHandler sets the operation handler for the get clusters operation
+	ClustersGetClustersHandler clusters.GetClustersHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -159,8 +159,8 @@ func (o *SyncsetsAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.ClustersGetHandler == nil {
-		unregistered = append(unregistered, "clusters.GetHandler")
+	if o.ClustersGetClustersHandler == nil {
+		unregistered = append(unregistered, "clusters.GetClustersHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -253,7 +253,7 @@ func (o *SyncsetsAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"][""] = clusters.NewGet(o.context, o.ClustersGetHandler)
+	o.handlers["GET"]["/clusters"] = clusters.NewGetClusters(o.context, o.ClustersGetClustersHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP
