@@ -4,12 +4,16 @@ package restapi
 
 import (
 	"crypto/tls"
+	"database/sql"
+	_ "github.com/lib/pq"
+	log "github.com/sirupsen/logrus"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
+	"github.com/dgoodwin/syncsets/handlers"
 	"github.com/dgoodwin/syncsets/restapi/operations"
 	"github.com/dgoodwin/syncsets/restapi/operations/clusters"
 )
@@ -34,23 +38,68 @@ func configureAPI(api *operations.SyncsetsAPI) http.Handler {
 	// To continue using redoc as your UI, uncomment the following line
 	// api.UseRedoc()
 
-	api.JSONConsumer = runtime.JSONConsumer()
+	log.SetLevel(log.InfoLevel)
+	log.Info("running syncsets-api")
 
+	db, err := sql.Open("postgres", "user=postgres password=WYZVrmtdvuQlsq4hvo8C host=postgresql dbname=syncsets sslmode=disable")
+	if err != nil {
+		log.WithError(err).Fatal("error connecting to database")
+	}
+
+	/*
+		conn, err := amqp.Dial("amqp://ffY5PQ_tMehsn2tryfCDvuEvVDIBoLYu:Sp7vDEG8J_E62XFi-6r3XWBQJJi0T1Sy@rabbitmq:5672/")
+		if err != nil {
+			log.WithError(err).Fatal("error connecting to to rabbitmq")
+		}
+		defer conn.Close()
+		log.Info("rabbitmq connection established")
+		ch, err := conn.Channel()
+		if err != nil {
+			log.WithError(err).Fatal("error establishing rabbitmq channel")
+		}
+		defer ch.Close()
+
+		q, err := ch.QueueDeclare(
+			"clusters", // name
+			false,      // durable
+			false,      // delete when unused
+			false,      // exclusive
+			false,      // no-wait
+			nil,        // arguments
+		)
+		if err != nil {
+			log.WithError(err).Fatal("error declaring rabbitmq queue")
+		}
+		err = ch.Publish(
+			"",     // exchange
+			q.Name, // routing key
+			false,  // mandatory
+			false,  // immediate
+			amqp.Publishing{
+				ContentType: "text/plain",
+				Body:        []byte("hello world"),
+			})
+		if err != nil {
+			log.WithError(err).Error("error publishing test message")
+		}
+	*/
+
+	clusterHandler := handlers.NewClusterHandler(db)
+
+	api.JSONConsumer = runtime.JSONConsumer()
 	api.JSONProducer = runtime.JSONProducer()
 
 	if api.ClustersGetClustersHandler == nil {
-		api.ClustersGetClustersHandler = clusters.GetClustersHandlerFunc(func(params clusters.GetClustersParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.GetClusters has not yet been implemented")
+		api.ClustersGetClustersHandler = clusterHandler
+	}
+	if api.ClustersDeleteHandler == nil {
+		api.ClustersDeleteHandler = clusters.DeleteHandlerFunc(func(params clusters.DeleteParams) middleware.Responder {
+			return middleware.NotImplemented("operation clusters.Delete has not yet been implemented")
 		})
 	}
-	if api.ClustersCreateOrUpdateOneHandler == nil {
-		api.ClustersCreateOrUpdateOneHandler = clusters.CreateOrUpdateOneHandlerFunc(func(params clusters.CreateOrUpdateOneParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.CreateOrUpdateOne has not yet been implemented")
-		})
-	}
-	if api.ClustersDestroyOneHandler == nil {
-		api.ClustersDestroyOneHandler = clusters.DestroyOneHandlerFunc(func(params clusters.DestroyOneParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.DestroyOne has not yet been implemented")
+	if api.ClustersUpdateHandler == nil {
+		api.ClustersUpdateHandler = clusters.UpdateHandlerFunc(func(params clusters.UpdateParams) middleware.Responder {
+			return middleware.NotImplemented("operation clusters.Update has not yet been implemented")
 		})
 	}
 

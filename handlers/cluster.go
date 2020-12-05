@@ -5,8 +5,11 @@ import (
 	//"encoding/json"
 	"fmt"
 	"github.com/dgoodwin/syncsets/api"
+	"github.com/dgoodwin/syncsets/models"
+	"github.com/dgoodwin/syncsets/restapi/operations/clusters"
+	"github.com/go-openapi/runtime/middleware"
 	log "github.com/sirupsen/logrus"
-	"io/ioutil"
+	//"io/ioutil"
 	"net/http"
 )
 
@@ -28,35 +31,23 @@ func GetResourceType(req *http.Request) (string, error) {
 	return req.URL.Path[1:], nil
 }
 
-func (h *ClusterHandler) Get(resp http.ResponseWriter, req *http.Request) {
+func (h *ClusterHandler) Handle(params clusters.GetClustersParams) middleware.Responder {
 	h.logger.Info("called get handler")
-	resource, err := GetResourceType(req)
-	if err != nil {
-		log.WithError(err).Error("error getting resource")
-		return
-	}
+	resource := "clusters"
 	h.logger.Infof("working with resource: %s", resource)
-	r, err := h.registry.GetResource(resource)
-	if err != nil {
-		log.WithError(err).Error("error getting resource")
-		return
-	}
 	row := h.db.QueryRow(
 		fmt.Sprintf("SELECT data FROM %s ORDER BY id DESC LIMIT 1", resource))
 
-	err = r.RowScan(row)
+	c := &models.Cluster{}
+	err := row.Scan(c)
 	if err != nil {
 		log.WithError(err).Error("error querying db")
-		return
+		return clusters.NewGetClustersDefault(500)
 	}
-	jsonBytes, err := r.Marshal()
-	if err != nil {
-		log.WithError(err).Error("error marshalling json")
-		return
-	}
-	fmt.Fprintf(resp, string(jsonBytes))
+	return clusters.NewGetClustersOK().WithPayload([]*models.Cluster{c})
 }
 
+/*
 func (h *ClusterHandler) Post(resp http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(resp, "called post handler")
 	reqBody, err := ioutil.ReadAll(req.Body)
@@ -83,12 +74,11 @@ func (h *ClusterHandler) Post(resp http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(resp, "error inserting into db")
 	}
 
-	/*
 		var newEvent event
 			json.Unmarshal(reqBody, &newEvent)
 			events = append(events, newEvent)
 			w.WriteHeader(http.StatusCreated)
 
 			json.NewEncoder(w).Encode(newEvent)
-	*/
 }
+*/
