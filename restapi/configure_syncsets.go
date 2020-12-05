@@ -43,6 +43,16 @@ func configureAPI(api *operations.SyncsetsAPI) http.Handler {
 			return middleware.NotImplemented("operation clusters.GetClusters has not yet been implemented")
 		})
 	}
+	if api.ClustersCreateOrUpdateOneHandler == nil {
+		api.ClustersCreateOrUpdateOneHandler = clusters.CreateOrUpdateOneHandlerFunc(func(params clusters.CreateOrUpdateOneParams) middleware.Responder {
+			return middleware.NotImplemented("operation clusters.CreateOrUpdateOne has not yet been implemented")
+		})
+	}
+	if api.ClustersDestroyOneHandler == nil {
+		api.ClustersDestroyOneHandler = clusters.DestroyOneHandlerFunc(func(params clusters.DestroyOneParams) middleware.Responder {
+			return middleware.NotImplemented("operation clusters.DestroyOne has not yet been implemented")
+		})
+	}
 
 	api.PreServerShutdown = func() {}
 

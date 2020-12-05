@@ -69,3 +69,38 @@ paths:
           description: generic error response
           schema:
             $ref: "#/definitions/error"
+  /clusters/{name}:
+    parameters:
+      - type: string
+        name: name
+        in: path
+        required: true
+    put:
+      tags:
+        - clusters
+      operationId: createOrUpdateOne
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/cluster"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/cluster"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+    delete:
+      tags:
+        - clusters
+      operationId: destroyOne
+      responses:
+        204:
+          description: Deleted
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"

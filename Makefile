@@ -28,12 +28,16 @@ deploy:
 swagger-validate:
 	swagger validate swagger.yaml
 
+.PHONY: swagger-gen
+swagger-gen:
+	swagger generate server -A syncsets -f ./swagger.yaml
+
 .PHONY: install
-install:
+install: swagger-gen
 	go install ./cmd/syncsets-server
 
 .PHONY: run
 run: install
-	syncsets-server
+	syncsets-server --port=7070
 
 
