@@ -41,10 +41,11 @@ func configureAPI(api *operations.SyncsetsAPI) http.Handler {
 	log.SetLevel(log.InfoLevel)
 	log.Info("running syncsets-api")
 
-	db, err := sql.Open("postgres", "user=postgres password=WYZVrmtdvuQlsq4hvo8C host=postgresql dbname=syncsets sslmode=disable")
+	db, err := sql.Open("postgres", "user=postgres password=helloworld host=localhost dbname=syncsets sslmode=disable")
 	if err != nil {
 		log.WithError(err).Fatal("error connecting to database")
 	}
+	log.Info("database connection established")
 
 	/*
 		conn, err := amqp.Dial("amqp://ffY5PQ_tMehsn2tryfCDvuEvVDIBoLYu:Sp7vDEG8J_E62XFi-6r3XWBQJJi0T1Sy@rabbitmq:5672/")
