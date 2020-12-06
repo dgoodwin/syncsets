@@ -3,13 +3,11 @@ package handlers
 import (
 	"database/sql"
 	//"encoding/json"
-	//"fmt"
 	"github.com/dgoodwin/syncsets/api"
-	//"github.com/dgoodwin/syncsets/models"
-	//"github.com/dgoodwin/syncsets/restapi/operations/clusters"
-	//"github.com/go-openapi/runtime/middleware"
+	"github.com/dgoodwin/syncsets/restapi/operations"
+	"github.com/go-openapi/runtime/middleware"
 	log "github.com/sirupsen/logrus"
-	//"io/ioutil"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -39,14 +37,14 @@ type BadRequest struct {
 // Responses:
 //   200: OK
 //   400: BadRequest
-type ClusterHandler struct {
+type ClusterCreateHandler struct {
 	logger   log.FieldLogger
 	db       *sql.DB
 	registry *api.Registry
 }
 
-func NewClusterHandler(db *sql.DB) *ClusterHandler {
-	return &ClusterHandler{
+func NewClusterCreateHandler(db *sql.DB) *ClusterCreateHandler {
+	return &ClusterCreateHandler{
 		db:       db,
 		logger:   log.WithField("handler", "cluster"),
 		registry: api.NewRegistry(),
@@ -58,7 +56,7 @@ func GetResourceType(req *http.Request) (string, error) {
 }
 
 /*
-func (h *ClusterHandler) Handle(params clusters.GetClustersParams) middleware.Responder {
+func (h *ClusterCreateHandler) Handle(params clusters.GetClustersParams) middleware.Responder {
 	h.logger.Info("called get handler")
 	resource := "clusters"
 	h.logger.Infof("working with resource: %s", resource)
@@ -75,20 +73,20 @@ func (h *ClusterHandler) Handle(params clusters.GetClustersParams) middleware.Re
 }
 */
 
-/*
-func (h *ClusterHandler) Post(resp http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(resp, "called post handler")
-	reqBody, err := ioutil.ReadAll(req.Body)
+func (h *ClusterCreateHandler) Handle(params operations.CreateClusterParams) middleware.Responder {
+	log.Info("called CreateClusterHandler")
+
+	reqBody, err := ioutil.ReadAll(params.HTTPRequest.Body)
 	if err != nil {
 		log.WithError(err).Error("error reading request body")
-		fmt.Fprintf(resp, "error reading request body")
+		return operations.NewCreateClusterBadRequest().WithResponseCode(500)
 	}
 
 	cluster := &api.Cluster{}
 	err = cluster.Scan(reqBody)
 	if err != nil {
 		log.WithError(err).Error("error parsing request body")
-		fmt.Fprintf(resp, "error parsing request body")
+		return operations.NewCreateClusterBadRequest().WithResponseCode(500)
 	}
 	h.logger.WithField("cluster", cluster.Name).Info("called post and parsed cluster")
 
@@ -99,14 +97,7 @@ func (h *ClusterHandler) Post(resp http.ResponseWriter, req *http.Request) {
 	_, err = h.db.Exec("INSERT INTO clusters (name, namespace, data) VALUES($1, $2, $3)", cluster.Name, cluster.Namespace, cluster)
 	if err != nil {
 		log.WithError(err).Error("error inserting into db")
-		fmt.Fprintf(resp, "error inserting into db")
+		return operations.NewCreateClusterBadRequest().WithResponseCode(500)
 	}
-
-		var newEvent event
-			json.Unmarshal(reqBody, &newEvent)
-			events = append(events, newEvent)
-			w.WriteHeader(http.StatusCreated)
-
-			json.NewEncoder(w).Encode(newEvent)
+	return operations.NewCreateClusterOK()
 }
-*/

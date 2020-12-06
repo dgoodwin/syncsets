@@ -7,6 +7,8 @@
 //  http
 //  https
 //  Schemes:
+//  http
+//  Schemes:
 //    http
 //  Host: localhost
 //  BasePath: /v1

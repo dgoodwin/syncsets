@@ -4,12 +4,16 @@ package restapi
 
 import (
 	"crypto/tls"
+	"database/sql"
 	"net/http"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/runtime/middleware"
+	//"github.com/go-openapi/runtime/middleware"
 
+	"github.com/dgoodwin/syncsets/handlers"
 	"github.com/dgoodwin/syncsets/restapi/operations"
 )
 
@@ -37,11 +41,15 @@ func configureAPI(api *operations.SyncsetsAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.CreateClusterHandler == nil {
-		api.CreateClusterHandler = operations.CreateClusterHandlerFunc(func(params operations.CreateClusterParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.CreateCluster has not yet been implemented")
-		})
+	log.Info("configuring restapi")
+
+	db, err := sql.Open("postgres", "user=postgres password=helloworld host=localhost dbname=syncsets sslmode=disable")
+	if err != nil {
+		log.WithError(err).Fatal("error connecting to database")
 	}
+	log.Info("database connection established")
+
+	api.CreateClusterHandler = handlers.NewClusterCreateHandler(db)
 
 	api.PreServerShutdown = func() {}
 

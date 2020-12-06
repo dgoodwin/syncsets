@@ -51,7 +51,9 @@ func NewSyncsetsAPI(spec *loads.Document) *SyncsetsAPI {
 /*SyncsetsAPI Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.
 Schemes:
 http
-https */
+https
+Schemes:
+http */
 type SyncsetsAPI struct {
 	spec            *loads.Document
 	context         *middleware.Context

@@ -20,16 +20,16 @@ deploy:
 
 .PHONY: swagger-spec
 swagger-spec:
-	swagger generate spec -o ./swagger.yaml -m
+	swagger generate spec -o ./swagger.yaml -m -q
 
 .PHONY: swagger-validate
 swagger-validate:
-	swagger validate swagger.yaml
+	swagger validate swagger.yaml -q
 
 .PHONY: swagger-gen
 swagger-gen:
 	rm -rf restapi/operations
-	swagger generate server -A syncsets -f ./swagger.yaml
+	swagger generate server -A syncsets -f ./swagger.yaml -q
 	#swagger generate client -A syncsets -f ./swagger.yaml
 
 .PHONY: install

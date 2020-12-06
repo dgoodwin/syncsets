@@ -29,7 +29,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps",
+    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps\nSchemes:\nhttp",
     "title": "SyncSets API.",
     "contact": {
       "name": "Devan Goodwin",
@@ -170,7 +170,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps",
+    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps\nSchemes:\nhttp",
     "title": "SyncSets API.",
     "contact": {
       "name": "Devan Goodwin",
