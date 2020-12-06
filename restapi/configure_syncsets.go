@@ -49,7 +49,7 @@ func configureAPI(api *operations.SyncsetsAPI) http.Handler {
 	}
 	log.Info("database connection established")
 
-	api.CreateClusterHandler = handlers.NewClusterCreateHandler(db)
+	api.CreateClusterHandler = handlers.NewCreateClusterHandler(db)
 
 	api.PreServerShutdown = func() {}
 

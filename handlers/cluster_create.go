@@ -37,14 +37,14 @@ type BadRequest struct {
 // Responses:
 //   200: OK
 //   400: BadRequest
-type ClusterCreateHandler struct {
+type CreateClusterHandler struct {
 	logger   log.FieldLogger
 	db       *sql.DB
 	registry *api.Registry
 }
 
-func NewClusterCreateHandler(db *sql.DB) *ClusterCreateHandler {
-	return &ClusterCreateHandler{
+func NewCreateClusterHandler(db *sql.DB) *CreateClusterHandler {
+	return &CreateClusterHandler{
 		db:       db,
 		logger:   log.WithField("handler", "cluster"),
 		registry: api.NewRegistry(),
@@ -56,7 +56,7 @@ func GetResourceType(req *http.Request) (string, error) {
 }
 
 /*
-func (h *ClusterCreateHandler) Handle(params clusters.GetClustersParams) middleware.Responder {
+func (h *CreateClusterHandler) Handle(params clusters.GetClustersParams) middleware.Responder {
 	h.logger.Info("called get handler")
 	resource := "clusters"
 	h.logger.Infof("working with resource: %s", resource)
@@ -73,7 +73,7 @@ func (h *ClusterCreateHandler) Handle(params clusters.GetClustersParams) middlew
 }
 */
 
-func (h *ClusterCreateHandler) Handle(params operations.CreateClusterParams) middleware.Responder {
+func (h *CreateClusterHandler) Handle(params operations.CreateClusterParams) middleware.Responder {
 	log.Info("called CreateClusterHandler")
 
 	reqBody, err := ioutil.ReadAll(params.HTTPRequest.Body)
