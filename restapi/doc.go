@@ -4,6 +4,9 @@
 //
 //  Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.
 //  Schemes:
+//  http
+//  https
+//  Schemes:
 //    http
 //  Host: localhost
 //  BasePath: /v1

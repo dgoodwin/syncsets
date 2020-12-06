@@ -29,7 +29,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.",
+    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps",
     "title": "SyncSets API.",
     "contact": {
       "name": "Devan Goodwin",
@@ -44,87 +44,52 @@ func init() {
   "basePath": "/v1",
   "paths": {
     "/clusters": {
-      "get": {
-        "tags": [
-          "clusters"
+      "post": {
+        "description": "TODO Some test description that should be expanded on someday.",
+        "schemes": [
+          "http"
         ],
+        "summary": "Create a Cluster resource.",
+        "operationId": "createCluster",
         "responses": {
           "200": {
-            "description": "list the clusters",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/cluster"
-              }
-            }
+            "$ref": "#/responses/OK"
           },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
+          "400": {
+            "$ref": "#/responses/BadRequest"
           }
         }
       }
-    },
-    "/clusters/{name}": {
-      "put": {
-        "tags": [
-          "clusters"
-        ],
-        "operationId": "update",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/cluster"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/cluster"
-            }
-          },
-          "default": {
-            "description": "error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "clusters"
-        ],
-        "operationId": "delete",
-        "responses": {
-          "204": {
-            "description": "Deleted"
-          },
-          "default": {
-            "description": "error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "parameters": [
-        {
-          "type": "string",
-          "name": "name",
-          "in": "path",
-          "required": true
-        }
-      ]
     }
   },
   "definitions": {
+    "Cluster": {
+      "type": "object",
+      "title": "Cluster Cluster is a representation of a Cluster we will reconcile SyncSets to.",
+      "required": [
+        "kubeconfig",
+        "name",
+        "namespace"
+      ],
+      "properties": {
+        "kubeconfig": {
+          "description": "Kubeconfig is an admin kubeconfig file for communicating with the cluster.",
+          "type": "string",
+          "x-go-name": "Kubeconfig"
+        },
+        "name": {
+          "description": "Name of the cluster.",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "namespace": {
+          "description": "Namespace of the cluster. Models the Kubernetes concept of Namespace as OpenShift Hive\nuses that to allow multiple clusters with the same name, separated by owner.",
+          "type": "string",
+          "x-go-name": "Namespace"
+        }
+      },
+      "x-go-package": "github.com/dgoodwin/syncsets/models"
+    },
     "cluster": {
       "type": "object",
       "title": "Cluster is a representation of a Cluster we will reconcile SyncSets to.",
@@ -152,19 +117,42 @@ func init() {
       },
       "x-go-name": "Cluster",
       "x-go-package": "github.com/dgoodwin/syncsets/api"
-    },
-    "error": {
-      "type": "object",
-      "required": [
-        "message"
-      ],
-      "properties": {
-        "code": {
+    }
+  },
+  "responses": {
+    "BadRequest": {
+      "description": "BadRequest indicates that there was an error in\nthe HTTP request.",
+      "headers": {
+        "ResponseCode": {
           "type": "integer",
           "format": "int64"
-        },
-        "message": {
-          "type": "string"
+        }
+      }
+    },
+    "OK": {
+      "description": "OK indicates that the HTTP request was successful.",
+      "headers": {
+        "ResponseCode": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "createClusterBadRequest": {
+      "description": "CreateClusterBadRequest BadRequest indicates that there was an error in\nthe HTTP request.",
+      "headers": {
+        "ResponseCode": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "createClusterOK": {
+      "description": "CreateClusterOK OK indicates that the HTTP request was successful.",
+      "headers": {
+        "ResponseCode": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     }
@@ -182,7 +170,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.",
+    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps",
     "title": "SyncSets API.",
     "contact": {
       "name": "Devan Goodwin",
@@ -197,87 +185,64 @@ func init() {
   "basePath": "/v1",
   "paths": {
     "/clusters": {
-      "get": {
-        "tags": [
-          "clusters"
+      "post": {
+        "description": "TODO Some test description that should be expanded on someday.",
+        "schemes": [
+          "http"
         ],
+        "summary": "Create a Cluster resource.",
+        "operationId": "createCluster",
         "responses": {
           "200": {
-            "description": "list the clusters",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/cluster"
+            "description": "OK indicates that the HTTP request was successful.",
+            "headers": {
+              "ResponseCode": {
+                "type": "integer",
+                "format": "int64"
               }
             }
           },
-          "default": {
-            "description": "generic error response",
-            "schema": {
-              "$ref": "#/definitions/error"
+          "400": {
+            "description": "BadRequest indicates that there was an error in\nthe HTTP request.",
+            "headers": {
+              "ResponseCode": {
+                "type": "integer",
+                "format": "int64"
+              }
             }
           }
         }
       }
-    },
-    "/clusters/{name}": {
-      "put": {
-        "tags": [
-          "clusters"
-        ],
-        "operationId": "update",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/cluster"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/cluster"
-            }
-          },
-          "default": {
-            "description": "error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "clusters"
-        ],
-        "operationId": "delete",
-        "responses": {
-          "204": {
-            "description": "Deleted"
-          },
-          "default": {
-            "description": "error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
-      "parameters": [
-        {
-          "type": "string",
-          "name": "name",
-          "in": "path",
-          "required": true
-        }
-      ]
     }
   },
   "definitions": {
+    "Cluster": {
+      "type": "object",
+      "title": "Cluster Cluster is a representation of a Cluster we will reconcile SyncSets to.",
+      "required": [
+        "kubeconfig",
+        "name",
+        "namespace"
+      ],
+      "properties": {
+        "kubeconfig": {
+          "description": "Kubeconfig is an admin kubeconfig file for communicating with the cluster.",
+          "type": "string",
+          "x-go-name": "Kubeconfig"
+        },
+        "name": {
+          "description": "Name of the cluster.",
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "namespace": {
+          "description": "Namespace of the cluster. Models the Kubernetes concept of Namespace as OpenShift Hive\nuses that to allow multiple clusters with the same name, separated by owner.",
+          "type": "string",
+          "x-go-name": "Namespace"
+        }
+      },
+      "x-go-package": "github.com/dgoodwin/syncsets/models"
+    },
     "cluster": {
       "type": "object",
       "title": "Cluster is a representation of a Cluster we will reconcile SyncSets to.",
@@ -305,19 +270,42 @@ func init() {
       },
       "x-go-name": "Cluster",
       "x-go-package": "github.com/dgoodwin/syncsets/api"
-    },
-    "error": {
-      "type": "object",
-      "required": [
-        "message"
-      ],
-      "properties": {
-        "code": {
+    }
+  },
+  "responses": {
+    "BadRequest": {
+      "description": "BadRequest indicates that there was an error in\nthe HTTP request.",
+      "headers": {
+        "ResponseCode": {
           "type": "integer",
           "format": "int64"
-        },
-        "message": {
-          "type": "string"
+        }
+      }
+    },
+    "OK": {
+      "description": "OK indicates that the HTTP request was successful.",
+      "headers": {
+        "ResponseCode": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "createClusterBadRequest": {
+      "description": "CreateClusterBadRequest BadRequest indicates that there was an error in\nthe HTTP request.",
+      "headers": {
+        "ResponseCode": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "createClusterOK": {
+      "description": "CreateClusterOK OK indicates that the HTTP request was successful.",
+      "headers": {
+        "ResponseCode": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     }

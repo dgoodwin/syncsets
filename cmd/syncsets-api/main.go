@@ -10,6 +10,7 @@ import (
 	"net/http"
 )
 
+//go:generate swagger generate spec
 func main() {
 	log.SetLevel(log.InfoLevel)
 	log.Info("running syncsets-api")

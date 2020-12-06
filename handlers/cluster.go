@@ -3,16 +3,42 @@ package handlers
 import (
 	"database/sql"
 	//"encoding/json"
-	"fmt"
+	//"fmt"
 	"github.com/dgoodwin/syncsets/api"
-	"github.com/dgoodwin/syncsets/models"
-	"github.com/dgoodwin/syncsets/restapi/operations/clusters"
-	"github.com/go-openapi/runtime/middleware"
+	//"github.com/dgoodwin/syncsets/models"
+	//"github.com/dgoodwin/syncsets/restapi/operations/clusters"
+	//"github.com/go-openapi/runtime/middleware"
 	log "github.com/sirupsen/logrus"
 	//"io/ioutil"
 	"net/http"
 )
 
+// OK indicates that the HTTP request was successful.
+//
+// swagger:response
+type OK struct {
+	ResponseCode int
+}
+
+// BadRequest indicates that there was an error in
+// the HTTP request.
+//
+// swagger:response
+type BadRequest struct {
+	ResponseCode int
+}
+
+// swagger:route POST /clusters createCluster
+//
+// Create a Cluster resource.
+//
+// Some test description that should be expanded on someday.
+//
+// Schemes: http
+//
+// Responses:
+//   200: OK
+//   400: BadRequest
 type ClusterHandler struct {
 	logger   log.FieldLogger
 	db       *sql.DB
@@ -31,6 +57,7 @@ func GetResourceType(req *http.Request) (string, error) {
 	return req.URL.Path[1:], nil
 }
 
+/*
 func (h *ClusterHandler) Handle(params clusters.GetClustersParams) middleware.Responder {
 	h.logger.Info("called get handler")
 	resource := "clusters"
@@ -46,6 +73,7 @@ func (h *ClusterHandler) Handle(params clusters.GetClustersParams) middleware.Re
 	}
 	return clusters.NewGetClustersOK().WithPayload([]*models.Cluster{c})
 }
+*/
 
 /*
 func (h *ClusterHandler) Post(resp http.ResponseWriter, req *http.Request) {

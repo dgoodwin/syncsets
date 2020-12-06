@@ -28,7 +28,7 @@ func main() {
 
 	parser := flags.NewParser(server, flags.Default)
 	parser.ShortDescription = "SyncSets API."
-	parser.LongDescription = "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd."
+	parser.LongDescription = "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps"
 	server.ConfigureFlags()
 	for _, optsGroup := range api.CommandLineOptionsGroups {
 		_, err := parser.AddGroup(optsGroup.ShortDescription, optsGroup.LongDescription, optsGroup.Options)

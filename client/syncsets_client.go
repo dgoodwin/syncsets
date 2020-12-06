@@ -6,11 +6,10 @@ package client
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"github.com/dgoodwin/syncsets/client/operations"
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
-
-	"github.com/dgoodwin/syncsets/client/clusters"
 )
 
 // Default syncsets HTTP client.
@@ -26,7 +25,7 @@ const (
 )
 
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
-var DefaultSchemes = []string{"http"}
+var DefaultSchemes = []string{"http", "https"}
 
 // NewHTTPClient creates a new syncsets HTTP client.
 func NewHTTPClient(formats strfmt.Registry) *Syncsets {
@@ -55,7 +54,7 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Syncsets {
 
 	cli := new(Syncsets)
 	cli.Transport = transport
-	cli.Clusters = clusters.New(transport, formats)
+	cli.Operations = operations.New(transport, formats)
 	return cli
 }
 
@@ -100,7 +99,7 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // Syncsets is a client for syncsets
 type Syncsets struct {
-	Clusters clusters.ClientService
+	Operations operations.ClientService
 
 	Transport runtime.ClientTransport
 }
@@ -108,5 +107,5 @@ type Syncsets struct {
 // SetTransport changes the transport on the client and all its subresources
 func (c *Syncsets) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
-	c.Clusters.SetTransport(transport)
+	c.Operations.SetTransport(transport)
 }

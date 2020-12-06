@@ -18,8 +18,6 @@ import (
 	"github.com/go-openapi/spec"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-
-	"github.com/dgoodwin/syncsets/restapi/operations/clusters"
 )
 
 // NewSyncsetsAPI creates a new Syncsets instance
@@ -44,19 +42,16 @@ func NewSyncsetsAPI(spec *loads.Document) *SyncsetsAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		ClustersGetClustersHandler: clusters.GetClustersHandlerFunc(func(params clusters.GetClustersParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.GetClusters has not yet been implemented")
-		}),
-		ClustersDeleteHandler: clusters.DeleteHandlerFunc(func(params clusters.DeleteParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.Delete has not yet been implemented")
-		}),
-		ClustersUpdateHandler: clusters.UpdateHandlerFunc(func(params clusters.UpdateParams) middleware.Responder {
-			return middleware.NotImplemented("operation clusters.Update has not yet been implemented")
+		CreateClusterHandler: CreateClusterHandlerFunc(func(params CreateClusterParams) middleware.Responder {
+			return middleware.NotImplemented("operation CreateCluster has not yet been implemented")
 		}),
 	}
 }
 
-/*SyncsetsAPI Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd. */
+/*SyncsetsAPI Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.
+Schemes:
+http
+https */
 type SyncsetsAPI struct {
 	spec            *loads.Document
 	context         *middleware.Context
@@ -87,12 +82,8 @@ type SyncsetsAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
-	// ClustersGetClustersHandler sets the operation handler for the get clusters operation
-	ClustersGetClustersHandler clusters.GetClustersHandler
-	// ClustersDeleteHandler sets the operation handler for the delete operation
-	ClustersDeleteHandler clusters.DeleteHandler
-	// ClustersUpdateHandler sets the operation handler for the update operation
-	ClustersUpdateHandler clusters.UpdateHandler
+	// CreateClusterHandler sets the operation handler for the create cluster operation
+	CreateClusterHandler CreateClusterHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -169,14 +160,8 @@ func (o *SyncsetsAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.ClustersGetClustersHandler == nil {
-		unregistered = append(unregistered, "clusters.GetClustersHandler")
-	}
-	if o.ClustersDeleteHandler == nil {
-		unregistered = append(unregistered, "clusters.DeleteHandler")
-	}
-	if o.ClustersUpdateHandler == nil {
-		unregistered = append(unregistered, "clusters.UpdateHandler")
+	if o.CreateClusterHandler == nil {
+		unregistered = append(unregistered, "CreateClusterHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -266,18 +251,10 @@ func (o *SyncsetsAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/clusters"] = clusters.NewGetClusters(o.context, o.ClustersGetClustersHandler)
-	if o.handlers["DELETE"] == nil {
-		o.handlers["DELETE"] = make(map[string]http.Handler)
-	}
-	o.handlers["DELETE"]["/clusters/{name}"] = clusters.NewDelete(o.context, o.ClustersDeleteHandler)
-	if o.handlers["PUT"] == nil {
-		o.handlers["PUT"] = make(map[string]http.Handler)
-	}
-	o.handlers["PUT"]["/clusters/{name}"] = clusters.NewUpdate(o.context, o.ClustersUpdateHandler)
+	o.handlers["POST"]["/clusters"] = NewCreateCluster(o.context, o.CreateClusterHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP
