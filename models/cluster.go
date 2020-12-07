@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// Cluster Cluster Cluster is a representation of a Cluster we will reconcile SyncSets to.
+// Cluster Cluster is a representation of a Cluster we will reconcile SyncSets to.
 //
 // swagger:model Cluster
 type Cluster struct {

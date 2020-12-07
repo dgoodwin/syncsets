@@ -2,9 +2,9 @@
 IMG ?= quay.io/dgoodwin/syncsets:latest
 
 .PHONY: build
-build:
-	go build -o bin/syncsets-api github.com/dgoodwin/syncsets/cmd/syncsets-api
-	go build -o bin/syncsets-controllers github.com/dgoodwin/syncsets/cmd/syncsets-controllers
+build: swagger-gen
+	go build -o bin/syncsets-server github.com/dgoodwin/syncsets/cmd/syncsets-server
+	#go build -o bin/syncsets-controllers github.com/dgoodwin/syncsets/cmd/syncsets-controllers
 
 .PHONY: docker-push
 docker-push: build
@@ -27,7 +27,7 @@ swagger-validate:
 	swagger validate swagger.yaml -q
 
 .PHONY: swagger-gen
-swagger-gen:
+swagger-gen: swagger-spec
 	rm -rf restapi/operations
 	swagger generate server -A syncsets -f ./swagger.yaml -q
 	#swagger generate client -A syncsets -f ./swagger.yaml

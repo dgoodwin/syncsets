@@ -53,6 +53,16 @@ Schemes:
 http
 https
 Schemes:
+http
+Schemes:
+http
+Schemes:
+http
+Schemes:
+http
+Schemes:
+http
+Schemes:
 http */
 type SyncsetsAPI struct {
 	spec            *loads.Document

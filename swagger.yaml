@@ -64,6 +64,16 @@ info:
     https
     Schemes:
     http
+    Schemes:
+    http
+    Schemes:
+    http
+    Schemes:
+    http
+    Schemes:
+    http
+    Schemes:
+    http
   license:
     name: Apache2
   title: SyncSets API.
@@ -71,7 +81,7 @@ info:
 paths:
   /clusters:
     post:
-      description: TODO Some test description that should be expanded on someday.
+      description: Some test description that should be expanded on someday.
       operationId: createCluster
       responses:
         "200":

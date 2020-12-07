@@ -110,8 +110,6 @@ psql $POSTGRES_PARAMS -c "select * from clusters"
 
 ### Testing In-Cluster
 
-WARNING: WIP, needs an update since switching to go-swagger for restapi gen.
-
 ```bash
 IMG="quay.io/dgoodwin/syncsets:latest" make docker-push deploy
 ```

@@ -26,9 +26,14 @@ spec:
             cpu: 500m
             memory: 1Gi
         command:
-          - /opt/services/syncsets-api
+          - /opt/services/syncsets-server
+          - --port
+          - "7070"
         ports:
-          - containerPort: 8080
+          - containerPort: 7070
+        env:
+        - name: POSTGRES_PARAMS
+          value: "user=postgres dbname=syncsets sslmode=disable host=postgres password=helloworld"
 ---
 apiVersion: v1
 kind: Service

@@ -29,7 +29,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps\nSchemes:\nhttp",
+    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps\nSchemes:\nhttp\nSchemes:\nhttp\nSchemes:\nhttp\nSchemes:\nhttp\nSchemes:\nhttp\nSchemes:\nhttp",
     "title": "SyncSets API.",
     "contact": {
       "name": "Devan Goodwin",
@@ -45,7 +45,7 @@ func init() {
   "paths": {
     "/clusters": {
       "post": {
-        "description": "TODO Some test description that should be expanded on someday.",
+        "description": "Some test description that should be expanded on someday.",
         "schemes": [
           "http"
         ],
@@ -170,7 +170,7 @@ func init() {
   ],
   "swagger": "2.0",
   "info": {
-    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps\nSchemes:\nhttp",
+    "description": "Standalone Hive SyncSets without reliance on Kube API, CRs, and etcd.\nSchemes:\nhttp\nhttps\nSchemes:\nhttp\nSchemes:\nhttp\nSchemes:\nhttp\nSchemes:\nhttp\nSchemes:\nhttp\nSchemes:\nhttp",
     "title": "SyncSets API.",
     "contact": {
       "name": "Devan Goodwin",
@@ -186,7 +186,7 @@ func init() {
   "paths": {
     "/clusters": {
       "post": {
-        "description": "TODO Some test description that should be expanded on someday.",
+        "description": "Some test description that should be expanded on someday.",
         "schemes": [
           "http"
         ],

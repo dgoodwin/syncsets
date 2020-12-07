@@ -33,7 +33,7 @@ func NewCreateCluster(ctx *middleware.Context, handler CreateClusterHandler) *Cr
 
 Create a Cluster resource.
 
-TODO Some test description that should be expanded on someday.
+Some test description that should be expanded on someday.
 
 */
 type CreateCluster struct {
