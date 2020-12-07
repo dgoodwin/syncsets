@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"database/sql"
 	"net/http"
+	"os"
 
 	log "github.com/sirupsen/logrus"
 
@@ -43,7 +44,12 @@ func configureAPI(api *operations.SyncsetsAPI) http.Handler {
 
 	log.Info("configuring restapi")
 
-	db, err := sql.Open("postgres", "user=postgres password=helloworld host=localhost dbname=syncsets sslmode=disable")
+	postgresParams := os.Getenv("POSTGRES_PARAMS")
+	if postgresParams == "" {
+		log.Fatal("POSTGRES_PARAMS not defined")
+	}
+
+	db, err := sql.Open("postgres", postgresParams)
 	if err != nil {
 		log.WithError(err).Fatal("error connecting to database")
 	}
