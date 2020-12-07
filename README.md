@@ -2,6 +2,20 @@
 
 Prototype for an operator like application not depending on Kubernetes CRDs or API, breaking out the SyncSets functionality from OpenShift Hive.
 
+## Planned Architecture
+
+  * Simulate Kubernetes operator style applications, but without actually being depending on the Kubernetes apiserver, CRDs, or etcd.
+  * Generate restapi and Go client with go-swagger from Go types. ("code first")
+  * Rest API backed by Postgres JSONB document storage.
+    * Types will support some common metadata such as labels, only now they will actually be indexed.
+  * Watch will be provided by RabbitMQ or some AMQP bus for pub/sub.
+    * Hoping for very minimal bus usage with no logic.
+    * Rest API publishes events to queues for each API type.
+    * Establishing a watch means subscribing to a queue for an API type, and if you're listening you will receive messages on API events.
+  * Controllers to be horizontally scalable.
+    * Leverage a second type of queue where only one listener can pickup an event.
+    * Can run multiple pods and workloads will be distributed to only one as they pull work from the queue.
+
 ## Development
 
 ### Install go-swagger
@@ -34,7 +48,7 @@ oc adm policy add-scc-to-user rabbitmq-cluster -z rabbitmq-server
 Once running you can check in with:
 
 ```bash
-$ oc rsh rabbitmq-server-0 rabbitmqctl cluster_status
+oc rsh rabbitmq-server-0 rabbitmqctl cluster_status
 ```
 
 ### Create a PostgreSQL Database
